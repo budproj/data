@@ -1,0 +1,30 @@
+name: analytics
+version: 1.0.0
+config-version: 2
+profile: normalize
+
+seeds:
+  analytics:
+    +schema: seeds
+    buddy_companies:
+      +column_types:
+        name: varchar(32)
+
+    buddy_users:
+      +column_types:
+        email: varchar(32)
+
+    sandbox_companies:
+      +column_types:
+        name: varchar(32)
+
+    sandbox_users:
+      +column_types:
+        email: varchar(128)
+
+models:
+  analytics:
+    data_marts:
+      +materialized: table
+      okr:
+        +schema: dm_okr

@@ -1,6 +1,6 @@
 <p align="center">
   <br>
-   <img src="https://media3.giphy.com/media/y9DIEU4LhCizDUzE5o/giphy.gif" alt="Angel (from The Office) opening a container and dropping a lot of paper on Pam" title="Data Header GIF" />
+   <img src="doc/assets/header-gif.webp" alt="Angela (from The Office) opening a container and dropping a lot of paper on Pam" title="Data Header GIF" />
   <br>
 </p>
 <p align="center">

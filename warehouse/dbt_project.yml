@@ -28,3 +28,5 @@ models:
       +materialized: table
       okr:
         +schema: dm_okr
+        staging:
+          +schema: staging

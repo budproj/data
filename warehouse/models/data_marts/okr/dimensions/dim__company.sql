@@ -1,6 +1,6 @@
 with
-  stg_okr__team as (
-    select * from {{ ref('stg_okr__team') }}
+  companies as (
+    select * from {{ ref('stg_analytics__company') }}
   ),
 
   seed_buddy_companies_name as (
@@ -11,14 +11,10 @@ with
     select name from {{ ref('sandbox_companies') }}
   ),
 
-  companies as (
-    select * from stg_okr__team where parent_id is null
-  ),
-
   final as  (
     select
-      {{ dbt_utils.surrogate_key(['id']) }}::uuid as id,
-      id as team_id,
+      id,
+      team_id,
       name,
       case
         when (

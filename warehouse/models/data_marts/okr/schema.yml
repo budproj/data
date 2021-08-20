@@ -16,6 +16,7 @@ sources:
       - name: amplitude__events
       - name: analytics__company
       - name: analytics__key_result_progress_record
+      - name: analytics__company_users_user
 
 models:
   - name: dim__user

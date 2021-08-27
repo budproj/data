@@ -1,0 +1,365 @@
+version: 2
+
+sources:
+  - name: conformed
+    database: dw001
+    schema: conformed
+    tables:
+      - name: okr__user
+      - name: okr__team
+      - name: okr__team_users_user
+      - name: okr__cycle
+      - name: okr__objective
+      - name: okr__key_result
+      - name: okr__key_result_check_in
+      - name: okr__key_result_comment
+      - name: amplitude__events
+      - name: analytics__company
+      - name: analytics__key_result_progress_record
+      - name: analytics__company_users_user
+
+models:
+  - name: dim__user
+    columns:
+      - name: id
+      - name: role
+      - name: about
+      - name: email
+      - name: gender
+      - name: picture
+      - name: nickname
+      - name: authz_sub
+      - name: first_name
+      - name: last_name
+      - name: linked_in_profile_address
+      - name: created_at
+      - name: updated_at
+      - name: type
+
+  - name: dim__company
+    columns:
+      - name: id
+      - name: team_id
+      - name: name
+      - name: type
+
+  - name: dim__team
+    columns:
+      - name: id
+      - name: name
+      - name: gender
+      - name: owner_id
+      - name: parent_id
+      - name: description
+      - name: created_at
+      - name: updated_at
+      - name: company_id
+
+  - name: dim__cycle
+    columns:
+      - name: id
+      - name: active
+      - name: period
+      - name: cadence
+      - name: team_id
+      - name: date_start
+      - name: date_end
+      - name: parent_id
+      - name: created_at
+      - name: updated_at
+      - name: company_id
+
+  - name: dim__objective
+    columns:
+      - name: id
+      - name: title
+      - name: team_id
+      - name: cycle_id
+      - name: owner_id
+      - name: created_at
+      - name: updated_at
+      - name: company_id
+
+  - name: dim__key_result
+    columns:
+      - name: id
+      - name: goal
+      - name: type
+      - name: title
+      - name: format
+      - name: team_id
+      - name: owner_id
+      - name: description
+      - name: objective_id
+      - name: cycle_id
+      - name: initial_value
+      - name: created_at
+      - name: updated_at
+      - name: company_id
+
+  - name: dim__key_result_check_in
+    columns:
+      - name: id
+      - name: value
+      - name: comment
+      - name: user_id
+      - name: parent_id
+      - name: confidence
+      - name: key_result_id
+      - name: created_at
+      - name: objective_id
+      - name: cycle_id
+      - name: team_id
+      - name: company_id
+
+  - name: dim__key_result_comment
+    columns:
+      - name: id
+      - name: text
+      - name: user_id
+      - name: key_result_id
+      - name: created_at
+      - name: updated_at
+      - name: objective_id
+      - name: cycle_id
+      - name: team_id
+      - name: company_id
+
+  - name: dim__amplitude_event
+    columns:
+      - name: id
+      - name: user_id
+      - name: event_time
+      - name: event_type
+      - name: event_properties
+
+  - name: fct__user_accesses
+    columns:
+      - name: user_id
+      - name: amplitude_event_id
+      - name: access_time
+
+  - name: fct__company_members
+    columns:
+      - name: company_id
+      - name: user_id
+
+  - name: fct__team_members
+    columns:
+      - name: team_id
+      - name: user_id
+
+  - name: fct__user_active_key_results
+    columns:
+      - name: user_id
+      - name: key_result_id
+
+  - name: fct__user_created_key_result_check_ins
+    columns:
+      - name: user_id
+      - name: key_result_check_in_id
+      - name: created_at
+
+  - name: fct__user_created_key_result_comments
+    columns:
+      - name: user_id
+      - name: key_result_comment_id
+      - name: created_at
+
+  - name: fct__user_received_key_result_comments
+    columns:
+      - name: user_id
+      - name: author_id
+      - name: key_result_comment_id
+      - name: created_at
+
+  - name: fct__key_result_latest_check_in
+    columns:
+      - name: key_result_id
+      - name: key_result_check_in_id
+
+  - name: fct__user_historic_progress
+    columns:
+      - name: user_id
+      - name: progress
+      - name: date
+
+  - name: fct__user_active_progress
+    columns:
+      - name: user_id
+      - name: progress
+      - name: date
+
+  - name: fct__user_cycle_progress
+    columns:
+      - name: user_id
+      - name: cycle_id
+      - name: progress
+      - name: date
+
+  - name: fct__user_cadence_progress
+    columns:
+      - name: user_id
+      - name: cycle_id
+      - name: cadence
+      - name: progress
+      - name: date
+
+  - name: fct__team_historic_progress
+    columns:
+      - name: team_id
+      - name: progress
+      - name: date
+
+  - name: fct__team_active_progress
+    columns:
+      - name: team_id
+      - name: progress
+      - name: date
+
+  - name: fct__team_cycle_progress
+    columns:
+      - name: team_id
+      - name: cycle_id
+      - name: progress
+      - name: date
+
+  - name: fct__team_cadence_progress
+    columns:
+      - name: team_id
+      - name: cycle_id
+      - name: cadence
+      - name: progress
+      - name: date
+
+  - name: fct__company_historic_progress
+    columns:
+      - name: company_id
+      - name: progress
+      - name: date
+
+  - name: fct__company_active_progress
+    columns:
+      - name: company_id
+      - name: progress
+      - name: date
+
+  - name: fct__company_cycle_progress
+    columns:
+      - name: company_id
+      - name: cycle_id
+      - name: progress
+      - name: date
+
+  - name: fct__company_cadence_progress
+    columns:
+      - name: company_id
+      - name: cycle_id
+      - name: cadence
+      - name: progress
+      - name: date
+
+  - name: fct_cycle_progress
+    columns:
+      - name: cycle_id
+      - name: progress
+      - name: date
+
+  - name: fct__key_result_progress
+    columns:
+      - name: key_result_id
+      - name: progress
+      - name: date
+
+  - name: fct__key_result_progress_evolution
+    columns:
+      - name: key_result_id
+      - name: key_result_check_in_id
+      - name: progress
+      - name: date
+
+  - name: fct__user_activation
+    columns:
+      - name: user_id
+      - name: first_access_amplitude_event_id
+      - name: first_key_result_check_in_id
+      - name: first_key_result_comment_id
+
+  - name: fct__key_result_is_outdated
+    columns:
+      - name: key_result_id
+      - name: latest_check_in_id
+      - name: is_outdated
+      - name: latest_check_in_date
+
+  - name: fct__user_primary_team
+    columns:
+      - name: user_id
+      - name: team_id
+
+  - name: fct__user_primary_company
+    columns:
+      - name: user_id
+      - name: company_id
+
+  - name: fct__user_daily_access_average
+    columns:
+      - name: user_id
+      - name: daily_access_average
+
+  - name: fct__user_first_access
+    columns:
+      - name: user_id
+      - name: amplitude_event_id
+
+  - name: fct__user_last_access
+    columns:
+      - name: user_id
+      - name: amplitude_event_id
+
+  - name: fct__user_access_activation_delta
+    columns:
+      - name: user_id
+      - name: delta
+
+  - name: fct__user_first_key_result_check_in
+    columns:
+      - name: user_id
+      - name: key_result_check_in_id
+
+  - name: fct__user_checkin_activation_delta
+    columns:
+      - name: user_id
+      - name: delta
+
+  - name: fct__user_first_key_result_comment
+    columns:
+      - name: user_id
+      - name: key_result_comment_id
+
+  - name: fct__user_comment_activation_delta
+    columns:
+      - name: user_id
+      - name: delta
+
+  - name: fct__user_owns_key_result
+    columns:
+      - name: user_id
+      - name: owns_a_key_result
+
+  - name: fct__user_owned_key_results
+    columns:
+      - name: user_id
+      - name: owned_key_results
+
+  - name: fct__key_result_daily_average_progress
+    columns:
+      - name: key_result_id
+      - name: key_result_check_in_id
+      - name: day
+      - name: progress
+
+  - name: fct__key_result_amount_of_check_ins
+    columns:
+      - name: key_result_id
+      - name: amount_of_check_ins

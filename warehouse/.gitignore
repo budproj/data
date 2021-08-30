@@ -2,3 +2,4 @@
 dbt_modules
 target
 logs
+.profiles

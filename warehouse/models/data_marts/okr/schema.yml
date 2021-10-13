@@ -363,3 +363,14 @@ models:
     columns:
       - name: key_result_id
       - name: amount_of_check_ins
+
+  - name: fct__user_current_quarter_accesses
+    columns:
+      - name: amplitude_event_id
+      - name: user_id
+      - name: access_time
+
+  - name: fct__user_current_quarter_weekly_access_average
+    columns:
+      - name: user_id
+      - name: weekly_accesses_average

@@ -16,6 +16,7 @@ with
       first_name::varchar(256),
       last_name::varchar(256),
       linked_in_profile_address::text,
+      status::varchar(32),
       created_at::timestamp,
       updated_at::timestamp
     from src_okr__user

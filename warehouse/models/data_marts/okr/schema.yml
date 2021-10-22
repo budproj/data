@@ -303,11 +303,6 @@ models:
       - name: user_id
       - name: company_id
 
-  - name: fct__user_daily_access_average
-    columns:
-      - name: user_id
-      - name: daily_access_average
-
   - name: fct__user_first_access
     columns:
       - name: user_id
@@ -376,3 +371,8 @@ models:
       - name: user_id
       - name: first_access_amplitude_event_id
       - name: week
+
+  - name: fct__user_daily_access_average
+    columns:
+      - name: user_id
+      - name: average

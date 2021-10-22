@@ -1,42 +1,25 @@
 with
-  user_access as (
-    select * from {{ ref('fct__user_accesses') }}
+  user_first_access_per_day as (
+    select * from {{ ref('fct__user_first_access_per_day') }}
   ),
 
-  users as (
-    select * from {{ ref('dim__user') }}
-  ),
-
-  user_days_since_creation as (
+  user_day_with_access_flag as (
     select
-      id as user_id,
-      date_part('day', current_date::timestamp - created_at::timestamp) as days_since_creation
-    from users
+      *,
+      case when first_access_amplitude_event_id is null then 0 else 1 end as access_flag
+      from user_first_access_per_day
   ),
 
-  user_number_of_accesses as (
+  user_with_daily_access_average as (
     select
       user_id,
-      count(user_id) as number_of_accesses
-    from user_access
-    group by user_id
+      avg(access_flag) as average
+      from user_day_with_access_flag
+      group by user_id
   ),
 
   final as (
-    select
-      ud.user_id,
-      coalesce(
-        (
-          ua.number_of_accesses/
-          coalesce(
-            nullif(ud.days_since_creation,0),
-            1
-          )
-        ),
-        0
-      ) as average_access_per_day
-    from user_days_since_creation ud
-    left join user_number_of_accesses ua on ua.user_id = ud.user_id
+    select * from user_with_daily_access_average
   )
 
 select * from final

@@ -35,21 +35,28 @@ with
     from user_key_result_check_ins
   ),
 
+  user_key_result_check_ins_with_rank as (
+    select
+      *,
+      row_number() over (partition by user_id, week order by date asc) as rank
+      from user_key_result_check_ins_truncated_by_week
+  ),
+
+  user_first_weekly_key_result_check_ins as (
+    select
+      *
+      from user_key_result_check_ins_with_rank
+      where rank = 1
+  ),
+
   user_weeks_with_first_check_in as (
     select
       user_weeks.*,
-      user_key_result_check_ins.key_result_check_in_id as first_key_result_check_in_id
+      user_first_weekly_key_result_check_ins.key_result_check_in_id as first_key_result_check_in_id
       from user_weeks
-      left outer join lateral (
-        select
-          *
-          from user_key_result_check_ins_truncated_by_week
-          where
-            user_weeks.user_id = user_key_result_check_ins_truncated_by_week.user_id and
-            user_weeks.week = user_key_result_check_ins_truncated_by_week.week
-          order by user_key_result_check_ins_truncated_by_week.date asc
-          limit 1
-      ) as user_key_result_check_ins on true
+      left join user_first_weekly_key_result_check_ins on
+        user_weeks.user_id = user_first_weekly_key_result_check_ins.user_id and
+        user_weeks.week =  user_first_weekly_key_result_check_ins.week
   ),
 
   final as (

@@ -35,21 +35,28 @@ with
     from user_accesses
   ),
 
+  user_accesses_with_rank as (
+    select
+      *,
+      row_number() over (partition by user_id, week order by access_time asc) as rank
+      from user_accesses_truncated_by_week
+  ),
+
+  user_first_weekly_access as (
+    select
+      *
+      from user_accesses_with_rank
+      where rank = 1
+  ),
+
   user_weeks_with_first_access as (
     select
       user_weeks.*,
-      user_accesses.amplitude_event_id as first_access_amplitude_event_id
+      user_first_weekly_access.amplitude_event_id as first_access_amplitude_event_id
       from user_weeks
-      left outer join lateral (
-        select
-          *
-          from user_accesses_truncated_by_week
-          where
-            user_weeks.user_id = user_accesses_truncated_by_week.user_id and
-            user_weeks.week = user_accesses_truncated_by_week.week
-          order by user_accesses_truncated_by_week.access_time asc
-          limit 1
-      ) as user_accesses on true
+      left join user_first_weekly_access on
+        user_weeks.user_id = user_first_weekly_access.user_id and
+        user_weeks.week = user_first_weekly_access.week
   ),
 
   final as (

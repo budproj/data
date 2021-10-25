@@ -6,7 +6,7 @@ with
   user_average_accesses_per_week as (
     select
       user_id,
-      avg(accesses)
+      avg(accesses) as average
     from user_accesses_per_week
     group by user_id
   ),

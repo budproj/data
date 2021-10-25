@@ -382,3 +382,8 @@ models:
       - name: user_id
       - name: first_key_result_check_in_id
       - name: week
+
+  - name: fct__user_average_days_between_key_result_check_ins
+    columns:
+      - name: user_id
+      - name: average

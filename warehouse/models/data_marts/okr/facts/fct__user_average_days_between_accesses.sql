@@ -14,27 +14,20 @@ with
     from users
   ),
 
-  user_day_accesses as (
+  user_accesses_count as (
     select
       user_id,
-      date_trunc('day', access_time) as day
-      from user_accesses
-  ),
-
-  user_with_unique_day_access as (
-    select
-      *,
       count(*) as days_with_access
-      from user_day_accesses
-      group by user_id, day
+      from user_accesses
+      group by user_id
   ),
 
   user_access_average as (
     select
       user_with_days_since_register.user_id,
-      user_with_days_since_register.days_since_register / coalesce(nullif(user_with_unique_day_access.days_with_access, 0), 1) as average
+      user_with_days_since_register.days_since_register / coalesce(nullif(user_accesses_count.days_with_access, 0), 1) as average
     from user_with_days_since_register
-    left join user_with_unique_day_access on user_with_days_since_register.user_id = user_with_unique_day_access.user_id
+    left join user_accesses_count on user_with_days_since_register.user_id = user_accesses_count.user_id
   ),
 
   final as (

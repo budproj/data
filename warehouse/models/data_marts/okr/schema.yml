@@ -376,3 +376,8 @@ models:
     columns:
       - name: user_id
       - name: average
+
+  - name: fct__user_average_days_between_accesses
+    columns:
+      - name: user_id
+      - name: average

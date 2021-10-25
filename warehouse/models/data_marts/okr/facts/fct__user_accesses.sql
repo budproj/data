@@ -3,26 +3,27 @@ with
     select * from {{ ref('dim__amplitude_event') }}
   ),
 
-  final as (
+  amplitude_event_with_rank as (
     select
-      a1.user_id,
-      a1.session_id,
-      a2.id as amplitude_event_id,
-      a2.event_time as access_time
-      from amplitude_event a1
-      left outer join lateral (
-        select
-          *
-          from amplitude_event a2
-          where
-            a2.event_type = 'PageView' and
-            a1.user_id = a2.user_id and
-            a1.session_id = a2.session_id
-          order by a2.event_time
-          limit 1
-      ) as a2 on true
-      where a1.event_type = 'PageView'
-      group by a1.user_id, a1.session_id, a2.id, a2.event_time
+      *,
+      row_number() over (partition by user_id, session_id order by event_time asc) as rank
+      from amplitude_event
+  ),
+
+  accesses as (
+    select
+      id as amplitude_event_id,
+      user_id,
+      session_id,
+      event_time as access_time
+      from amplitude_event_with_rank
+      where
+        event_type = 'PageView' and
+        rank = 1
+  ),
+
+  final as (
+    select * from accesses
   )
 
 select * from final

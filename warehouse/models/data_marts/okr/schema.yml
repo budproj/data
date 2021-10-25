@@ -387,3 +387,14 @@ models:
     columns:
       - name: user_id
       - name: average
+
+  - name: fct__user_accesses_per_week
+    columns:
+      - name: user_id
+      - name: week
+      - name: accesses
+
+  - name: fct__user_average_accesses_per_week
+    columns:
+      - name: user_id
+      - name: average

@@ -1,6 +1,6 @@
 with
-  user_accesses as (
-    select * from {{ ref('fct__user_accesses') }}
+  user_key_result_check_ins as (
+    select * from {{ ref('fct__user_key_result_check_ins') }}
   ),
 
   users as (
@@ -28,32 +28,32 @@ with
     from user_weeks_delta
   ),
 
-  user_accesses_truncated_by_week as (
+  user_key_result_check_ins_truncated_by_week as (
     select
-      user_accesses.*,
-      date_trunc('week', user_accesses.access_time) as week
-    from user_accesses
+      user_key_result_check_ins.*,
+      date_trunc('week', user_key_result_check_ins.date) as week
+    from user_key_result_check_ins
   ),
 
-  user_weeks_with_first_access as (
+  user_weeks_with_first_check_in as (
     select
       user_weeks.*,
-      user_accesses.amplitude_event_id as first_access_amplitude_event_id
+      user_key_result_check_ins.key_result_check_in_id as first_key_result_check_in_id
       from user_weeks
       left outer join lateral (
         select
           *
-          from user_accesses_truncated_by_week
+          from user_key_result_check_ins_truncated_by_week
           where
-            user_weeks.user_id = user_accesses_truncated_by_week.user_id and
-            user_weeks.week = user_accesses_truncated_by_week.week
-          order by user_accesses_truncated_by_week.access_time asc
+            user_weeks.user_id = user_key_result_check_ins_truncated_by_week.user_id and
+            user_weeks.week = user_key_result_check_ins_truncated_by_week.week
+          order by user_key_result_check_ins_truncated_by_week.date asc
           limit 1
-      ) as user_accesses on true
+      ) as user_key_result_check_ins on true
   ),
 
   final as (
-    select * from user_weeks_with_first_access order by week desc
+    select * from user_weeks_with_first_check_in order by week desc
   )
 
 select * from final

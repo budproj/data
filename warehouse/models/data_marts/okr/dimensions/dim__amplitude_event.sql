@@ -7,6 +7,7 @@ with
     select
       uuid as id,
       user_id,
+      session_id,
       event_time,
       event_type,
       event_properties

@@ -13,6 +13,8 @@ sources:
       - name: okr__key_result
       - name: okr__key_result_check_in
       - name: okr__key_result_comment
+      - name: okr__key_result_check_mark
+      - name: okr__key_result_support_team_members_user
       - name: amplitude__events
       - name: analytics__company
       - name: analytics__key_result_progress_record
@@ -125,6 +127,20 @@ models:
       - name: cycle_id
       - name: team_id
       - name: company_id
+
+  - name: dim__key_result_check_mark
+    columns:
+      - name: id
+      - name: state
+      - name: description
+      - name: key_result_id
+      - name: user_id
+      - name: company_id
+      - name: created_at
+      - name: objective_id
+      - name: cycle_id
+      - name: team_id
+      - name: updated_at
 
   - name: dim__amplitude_event
     columns:
@@ -398,3 +414,8 @@ models:
     columns:
       - name: user_id
       - name: average
+
+  - name: fct__key_result_support_team
+    columns:
+      - name: key_result_id
+      - name: user_id

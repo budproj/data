@@ -354,11 +354,6 @@ models:
       - name: user_id
       - name: delta
 
-  - name: fct__user_owns_key_result
-    columns:
-      - name: user_id
-      - name: owns_a_key_result
-
   - name: fct__user_owned_key_results
     columns:
       - name: user_id
@@ -419,3 +414,9 @@ models:
     columns:
       - name: key_result_id
       - name: user_id
+
+  - name: fct__user_has_active_key_results
+    columns:
+      - name: user_id
+      - name: owns_any
+      - name: is_support_team_member_of_any

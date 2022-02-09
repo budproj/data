@@ -430,3 +430,18 @@ models:
     columns:
       - name: user_id
       - name: amount_of_active_check_marks
+
+  - name: fct__daily_active_users
+    columns:
+      - name: day
+      - name: amount_of_active_users
+
+  - name: fct__weekly_active_users
+    columns:
+      - name: week
+      - name: amount_of_active_users
+
+  - name: fct__monthly_active_users
+    columns:
+      - name: month
+      - name: amount_of_active_users

@@ -19,7 +19,7 @@ with
 
   day_series as (
     select
-      generate_series(1, days_since_first_event) as day_delta
+      generate_series(0, days_since_first_event) as day_delta
     from days_since_first_event
   ),
 

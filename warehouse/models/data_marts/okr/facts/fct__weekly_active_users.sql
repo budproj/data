@@ -19,7 +19,7 @@ with
 
   week_series as (
     select
-      generate_series(1, weeks_since_first_event) as week_delta
+      generate_series(0, weeks_since_first_event) as week_delta
     from weeks_since_first_event
   ),
 

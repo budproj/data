@@ -420,3 +420,8 @@ models:
       - name: user_id
       - name: owns_any
       - name: is_support_team_member_of_any
+
+  - name: fct__key_result_amount_of_check_marks
+    columns:
+      - name: key_result_id
+      - name: amount_of_check_marks

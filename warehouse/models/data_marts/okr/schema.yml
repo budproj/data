@@ -425,3 +425,8 @@ models:
     columns:
       - name: key_result_id
       - name: amount_of_check_marks
+
+  - name: fct__user_amount_of_active_check_marks
+    columns:
+      - name: user_id
+      - name: amount_of_active_check_marks

@@ -50,3 +50,17 @@ jobs:
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA"
+
+      - name: Setup git ssh key
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+            ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Setup git as a Github Actions user
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      - name: push to our repos
+        run: |
+          git tag canary -f && git push origin canary -f
+          bash <(curl -s https://raw.githubusercontent.com/budproj/gist/main/gitops/deploy.sh) -t $GITHUB_SHA -s stable}

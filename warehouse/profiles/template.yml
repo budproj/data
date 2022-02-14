@@ -1,0 +1,20 @@
+default:
+  target: prod
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: airbyte
+      password: changeme
+      port: 5432
+      dbname: dw001
+      schema: dm_okr
+
+    prod:
+      type: postgres
+      host: $DW_HOST
+      user: $DW_USER
+      password: $DW_PASSWORD
+      port: 5432
+      dbname: $DW_DB
+      schema: $DW_SCHEMA

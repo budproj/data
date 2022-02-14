@@ -36,11 +36,11 @@ jobs:
           # Build a docker container and push it to ECR 
           cd warehouse
           docker build \
-            --build-arg DW_HOST=$DW_HOST \
-            --build-arg DW_USER=$DW_USER \
-            --build-arg DW_PASSWORD=$DW_PASSWORD \
-            --build-arg DW_DB=$DW_DB \
-            --build-arg DW_SCHEMA=$DW_SCHEMA \
+            --build-arg DW_HOST \
+            --build-arg DW_USER \
+            --build-arg DW_PASSWORD \
+            --build-arg DW_DB \
+            --build-arg DW_SCHEMA \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA .
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA

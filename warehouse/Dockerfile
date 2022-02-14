@@ -26,4 +26,4 @@ COPY ./models ./models
 COPY ./dbt_project.yml ./
 COPY ./packages.yml ./
 
-ENTRYPOINT dbt deps && dbt seed && dbt run
+ENTRYPOINT cat /root/.dbt/profiles.yml && dbt deps && dbt seed && dbt run

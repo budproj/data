@@ -1,5 +1,6 @@
 # DBT
 dbt_modules
+dbt_packages
 target
 logs
 .profiles

@@ -60,7 +60,8 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
       - name: push to our repos
         run: |
-          git tag canary -f && git push origin canary -f
+          git tag stable -f && git push origin stable -f
           bash <(curl -s https://raw.githubusercontent.com/budproj/gist/main/gitops/deploy.sh) -t $GITHUB_SHA -s stable}

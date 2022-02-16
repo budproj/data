@@ -10,6 +10,7 @@ with
       description::text,
       user_id::uuid,
       key_result_id::uuid,
+      assigned_user_id::uuid,
       created_at::timestamp,
       updated_at::timestamp
     from src_okr__key_result_check_mark

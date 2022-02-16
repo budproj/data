@@ -15,22 +15,21 @@ with
     select * from {{ ref('dim__cycle') }}
   ),
 
-
   active_key_results as (
     select
-      key_result.id as id,
-      key_result.owner_id as owner_id
+      key_result.id as id
       from key_result
       left join cycle on cycle.id = key_result.cycle_id
       where cycle.active = true
   ),
 
-  grouped_check_marks as (
+  grouped_active_check_marks as (
     select
-      key_result_id,
+      assigned_user_id,
       count(*) as amount_of_check_marks
     from key_result_check_mark
-    group by key_result_id
+    right join active_key_results on active_key_results.id = key_result_check_mark.key_result_id
+    group by assigned_user_id
   ),
 
   final as (
@@ -38,9 +37,8 @@ with
       users.id as user_id,
       coalesce(sum(amount_of_check_marks), 0) as amount_of_active_check_marks
     from users
-    left join active_key_results on active_key_results.owner_id = users.id
-    left join grouped_check_marks on grouped_check_marks.key_result_id = active_key_results.id
-    group by user_id
+    left join grouped_active_check_marks on grouped_active_check_marks.assigned_user_id = users.id
+    group by users.id
   )
 
 select * from final

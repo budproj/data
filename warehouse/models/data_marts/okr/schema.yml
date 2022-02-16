@@ -445,3 +445,8 @@ models:
     columns:
       - name: month
       - name: amount_of_active_users
+
+  - name: fct__user_is_active
+    columns:
+      - name: user_id
+      - name: is_active

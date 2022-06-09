@@ -276,7 +276,7 @@ models:
       - name: progress
       - name: date
 
-  - name: fct_cycle_progress
+  - name: fct__cycle_progress
     columns:
       - name: cycle_id
       - name: progress

@@ -39,7 +39,7 @@ with
       device_family::varchar(32),
       start_version::varchar(32),
       device_carrier::varchar(32),
-      processed_time::timestamp,
+      TO_TIMESTAMP(processed_time, 'YYYY:MM:DD HH24:MI:SS') :: timestamp as processed_time,
       user_properties::json,
       event_properties::json,
       group_properties::json,

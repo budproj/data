@@ -137,6 +137,6 @@ select
     initial_value,
     format,
     company_id,
-    value_partition as value
+    first_value as value
 from
   final

@@ -142,6 +142,6 @@ select
     objective_id,
     format,
     company_id,
-    first_value as value
+    value_partition as value
 from
   final

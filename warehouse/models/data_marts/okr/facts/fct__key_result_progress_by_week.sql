@@ -6,7 +6,8 @@ with users_active_kr as (
     kr.format,
     kr.owner_id as user_id,
     kr.initial_value,
-    kr.company_id
+    kr.company_id,
+    kr.objective_id
   from
     {{ ref('dim__key_result') }} kr
     left join {{ ref('dim__cycle') }} c on c.id = kr.cycle_id
@@ -45,7 +46,8 @@ users_by_week_cross_kr as (
     users_active_kr.type,
     users_active_kr.initial_value,
     users_active_kr.format,
-    users_active_kr.company_id
+    users_active_kr.company_id,
+    users_active_kr.objective_id
   from
     users_with_kr_by_week
     join users_active_kr on users_with_kr_by_week.user_id = users_active_kr.user_id
@@ -92,6 +94,7 @@ final as (
     initial_value,
     format,
     company_id,
+    objective_id,
     value,
     value_partition,
     first_value(value) over (
@@ -111,6 +114,7 @@ final as (
         initial_value,
         format,
         company_id,
+        objective_id,
         value,
         sum(
           case
@@ -135,6 +139,7 @@ select
     goal,
     type,
     initial_value,
+    objective_id,
     format,
     company_id,
     first_value as value

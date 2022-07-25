@@ -47,9 +47,22 @@ with
       days.day as day,
       users.id as user_id,
       is_user_active.user_id is not null as is_active
-    from days
-    cross join users
-    left join is_user_active on is_user_active.day = days.day and users.id = is_user_active.user_id
+    from
+      days
+      join users on (
+        users.status = 'INACTIVE'
+        and days.day > users.created_at
+        and days.day < users.updated_at
+      )
+      or (
+        users.status = 'ACTIVE'
+        and days.day > users.created_at
+      )
+      left join is_user_active on is_user_active.day = days.day
+      and users.id = is_user_active.user_id
   )
 
-select * from final
+select
+  *
+from
+  final

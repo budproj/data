@@ -46,7 +46,9 @@ with
     select
       days.day as day,
       users.id as user_id,
-      is_user_active.user_id is not null as is_active
+      is_user_active.user_id is not null as is_active,
+      user_type,
+      flag_owns_team
     from
       days
       join users on (

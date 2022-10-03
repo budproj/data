@@ -18,8 +18,7 @@ with
       event_time as access_time
       from amplitude_event_with_rank
       where
-        event_type = 'PageView' and
-        rank = 1
+        event_type = 'PageView'
   ),
 
   final as (

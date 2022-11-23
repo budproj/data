@@ -16,6 +16,8 @@ with
       id,
       team_id,
       name,
+      created_at :: timestamp as created_at,
+      updated_at :: timestamp as updated_at,
       case
         when (
           select count(*) from seed_buddy_companies_name where name = companies.name

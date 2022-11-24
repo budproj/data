@@ -7,6 +7,14 @@ with
     select * from {{ ref('dim__user') }}
   ),
 
+  routines_answer_group as (
+    select * from {{ ref('dim__answer_group')}}
+  ),
+
+  routines_answer as (
+    select * from {{ ref('dim__answer')}}
+  ),
+
   first_event as (
     select
       *
@@ -42,11 +50,20 @@ with
     from amplitude_events
   ),
 
+  user_fill_routine as (
+    select
+      distinct
+      date_trunc('day', timestamp) as day,
+      user_id
+    from routines_answer_group
+  ),
+
   final as (
     select
       days.day as day,
       users.id as user_id,
       is_user_active.user_id is not null as is_active,
+      user_fill_routine.user_id is not null as fill_routine,
       user_type,
       flag_owns_team
     from
@@ -61,6 +78,7 @@ with
         and days.day > users.created_at
       )
       left join is_user_active on is_user_active.day = days.day
+      left join user_fill_routine on user_fill_routine.day = days.day
       and users.id = is_user_active.user_id
   )
 

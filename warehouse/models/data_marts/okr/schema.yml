@@ -19,6 +19,8 @@ sources:
       - name: analytics__company
       - name: analytics__key_result_progress_record
       - name: analytics__company_users_user
+      - name: routines__answer
+      - name: routines__answergroup
 
 models:
   - name: dim__user
@@ -149,6 +151,20 @@ models:
       - name: event_time
       - name: event_type
       - name: event_properties
+
+  - name: dim__answers
+    columns:
+      - name: id
+      - name: value
+      - name: question_id
+      - name: answer_group_id
+
+  - name: dim__answer_group
+    columns:
+      - name: id
+      - name: user_id
+      - name: company_id
+      - name: timestamp
 
   - name: fct__user_accesses
     columns:
@@ -455,3 +471,23 @@ models:
     columns:
       - name: month
       - name: amount_of_users
+
+  - name: fct__mau_routines_by_day
+    columns:
+      - name: day
+      - name: user_type
+      - name: flag_owns_team
+      - name: company_id
+      - name: unique_users
+      - name: unique_active_users
+      - name: mau
+
+  - name: fct__wau_routines_by_day
+    columns:
+      - name: day
+      - name: user_type
+      - name: flag_owns_team
+      - name: company_id
+      - name: unique_users
+      - name: unique_active_users
+      - name: wau

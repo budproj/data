@@ -56,7 +56,7 @@ with
       from user_months
       left join user_first_monthly_access on
         user_months.user_id = user_first_monthly_access.user_id and
-        user_months.week = user_first_monthly_access.week
+        user_months.month = user_first_monthly_access.month
   ),
 
   final as (

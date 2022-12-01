@@ -12,7 +12,7 @@ with
   ),
 
   routines_answer as (
-    select * from {{ ref('dim__answer')}}
+    select * from {{ ref('dim__answers')}}
   ),
 
   first_event as (

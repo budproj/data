@@ -12,7 +12,7 @@ with
       id as user_id,
       {{ weeks_in_range('created_at', 'current_date') }} as weeks_since_creation
     from users
-  ),
+  ),  
 
   user_weeks_delta as (
     select

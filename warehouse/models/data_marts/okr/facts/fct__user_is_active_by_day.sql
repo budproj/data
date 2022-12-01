@@ -78,8 +78,8 @@ with
         and days.day > users.created_at
       )
       left join is_user_active on is_user_active.day = days.day
-      left join user_fill_routine on user_fill_routine.day = days.day
       and users.id = is_user_active.user_id
+      left join user_fill_routine on user_fill_routine.day = days.day
   )
 
 select

@@ -6,14 +6,6 @@ with calendar as (
   order by
     day
 ),
-user_filled_routines as (
-  select
-    *
-  from
-    {{ ref('fct__user_is_active_by_day') }} u
-  where
-    u.fill_routine = true
-),
 final as (
   select
     c.day,
@@ -24,13 +16,13 @@ final as (
     count(
       distinct(
         case
-          when ac.is_active is true then ac.user_id
+          when ac.fill_routine is true then ac.user_id
         end
       )
     ) as unique_active_users
   from
     calendar c
-    join user_filled_routines ac on ac.day >= c.day - interval '7' day
+    join {{ ref('fct__user_is_active_by_day') }} ac on ac.day >= c.day - interval '7' day
     and ac.day <= c.day
     join {{ ref('fct__company_members') }} fcm on ac.user_id = fcm.user_id
   group by

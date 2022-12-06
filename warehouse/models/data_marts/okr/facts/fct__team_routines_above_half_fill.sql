@@ -43,8 +43,6 @@ team_data as (
         and t.week > u.created_at
       )
     )
-  where
-    c.name not in ('blah')
   group by
     c.id,
     c.name,
@@ -78,8 +76,6 @@ routines_data as (
         and t.week > u.created_at
       )
     )
-  where
-    c.name not in ('blah')
   group by
     c.id,
     c.name,

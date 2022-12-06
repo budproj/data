@@ -491,3 +491,32 @@ models:
       - name: unique_users
       - name: unique_active_users
       - name: wau
+
+  - name: fct__team_routines_above_half_fill
+    columns:
+      - name: week
+      - name: teams_with_at_least_50_percent
+      - name: total
+
+  - name: fct__team_routines_stickness_by_day
+    columns:
+      - name: id
+      - name: name
+      - name: team_id
+      - name: team_name
+      - name: day
+      - name: active
+      - name: weekly_active
+      - name: monthly_active
+      - name: wau
+      - name: mau
+      - name: stickness
+
+  - name: fct__team_routines_stickness_grouped_by_day
+    columns:
+      - name: day
+      - name: teams_with_at_least_50_percent_wau
+      - name: teams_with_at_least_50_percent_mau
+      - name: wau
+      - name: mau
+      - name: stickness

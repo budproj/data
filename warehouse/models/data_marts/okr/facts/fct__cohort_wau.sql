@@ -455,11 +455,6 @@ select
     ) as week80,
     avg(
         case
-            when week = 80 then average_wau
-        end
-    ) as week80,
-    avg(
-        case
             when week = 81 then average_wau
         end
     ) as week81,
@@ -1040,12 +1035,6 @@ all (
                 else 0
             end
         ) as week79,
-        sum(
-            case
-                when week = 80 then average_wau
-                else 0
-            end
-        ) as week80,
         sum(
             case
                 when week = 80 then average_wau

@@ -22,7 +22,7 @@ with
       key_result_progress.progress,
       key_result_progress.date
       from company
-      left join key_result on company.id = key_result.team_id
+      left join key_result on company.team_id = key_result.team_id
       left join key_result_progress on key_result.id = key_result_progress.key_result_id
       left join cycle on key_result.cycle_id = cycle.id
   ),

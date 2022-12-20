@@ -5,7 +5,7 @@ with
 
   final as (
     select
-      id::uuid,
+      id::text,
       key_result_id::uuid,
       key_result_check_in_id::uuid,
       date::timestamp,

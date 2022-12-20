@@ -1,6 +1,6 @@
 with
   src_analytics__key_result_progress_record as (
-    select * from {{ source('conformed', 'analytics__key_result_progress_record') }}
+    select * from {{ ref('key_result_progress_record') }}
   ),
 
   final as (

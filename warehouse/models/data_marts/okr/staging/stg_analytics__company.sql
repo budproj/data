@@ -1,6 +1,6 @@
 with
   src_analytics__company as (
-    select * from {{ source('conformed', 'analytics__company') }}
+    select * from {{ ref('company') }}
   ),
 
   final as (

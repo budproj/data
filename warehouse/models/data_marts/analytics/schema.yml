@@ -1,0 +1,61 @@
+version: 2
+
+sources:
+  - name: conformed
+    schema: conformed
+    tables:
+      - name: okr__user
+      - name: okr__team
+      - name: okr__team_users_user
+      - name: okr__key_result
+      - name: okr__key_result_check_in
+
+models:
+  - name: user
+    columns:
+      - name: id
+      - name: created_at
+      - name: updated_at
+
+  - name: company
+    columns:
+      - name: id
+      - name: team_id
+      - name: name
+      - name: created_at
+      - name: updated_at
+
+  - name: team
+    columns:
+      - name: id
+      - name: company_id
+      - name: created_at
+      - name: updated_at
+
+  - name: key_result
+    columns:
+      - name: id
+      - name: created_at
+      - name: updated_at
+
+  - name: key_result_check_in
+    columns:
+      - name: id
+      - name: key_result_id
+      - name: created_at
+      - name: updated_at
+
+  - name: company_users_user
+    columns:
+      - name: company_id
+      - name: user_id
+
+  - name: key_result_progress_record
+    columns:
+      - name: id
+      - name: key_result_id
+      - name: key_result_check_in_id
+      - name: date
+      - name: progress
+      - name: created_at
+      - name: updated_at

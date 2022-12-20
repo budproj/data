@@ -9,7 +9,7 @@ with
 
   final as (
     select
-      {{ generate_uuid() }} as id,
+      key_result.id || key_result.created_at :: text as id,
       key_result.id as key_result_id,
       key_result_check_in.id as key_result_check_in_id,
       key_result_check_in.created_at as date,

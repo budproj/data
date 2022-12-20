@@ -9,7 +9,7 @@ with
 
   final as  (
     select
-      {{ generate_uuid() }} as id,
+      id || created_at :: text  as id,
       id as team_id,
       name,
       created_at,

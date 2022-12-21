@@ -1,11 +1,11 @@
 with
   src_analytics__company as (
-    select * from {{ source('conformed', 'analytics__company') }}
+    select * from {{ ref('company') }}
   ),
 
   final as (
     select
-      id::uuid,
+      id::text,
       team_id::uuid,
       name::varchar(256),
       created_at::timestamp,

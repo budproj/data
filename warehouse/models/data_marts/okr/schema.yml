@@ -21,6 +21,7 @@ sources:
       - name: analytics__company_users_user
       - name: routines__answer
       - name: routines__answergroup
+      - name: comm__comment
 
 models:
   - name: dim__user

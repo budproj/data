@@ -22,6 +22,17 @@ seed_sandbox_users_email as (
   from
     {{ ref('sandbox_users') }}
 ),
+buddies_accross_others_companies as (
+    select
+        email
+    from
+        {{ ref('stg_okr__user') }} u
+        left join {{ ref('stg_analytics__company_users_user') }}  cuu on u.id = cuu.user_id
+        left join {{ ref('stg_analytics__company') }} c on cuu.company_id = c.id
+    where
+        c.name <> 'Bud'
+        and u.email like  '%@getbud.co'
+),
 users as (
   select
     *
@@ -48,6 +59,14 @@ users_with_type as (
         where
           email = users.email
       ) = 1 then 'SANDBOX'
+      when (
+          select
+            count(*)
+          from
+            buddies_accross_others_companies
+          where
+            email = users.email
+      ) = 1 then 'BOT'
       else 'CUSTOMER'
     end as type
   from

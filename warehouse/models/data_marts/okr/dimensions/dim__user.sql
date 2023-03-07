@@ -66,7 +66,7 @@ users_with_type as (
             buddies_accross_others_companies
           where
             email = users.email
-      ) = 1 then 'BOT'
+      ) = 1 then 'CS'
       else 'CUSTOMER'
     end as type
   from

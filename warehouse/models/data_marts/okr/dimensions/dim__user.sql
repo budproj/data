@@ -119,6 +119,7 @@ final as (
     left join user_owner_okr uoo on u.id = uoo.id
     left join user_supports_okr uso on u.id = uso.id
     left join user_owns_team uot on u.id = uot.id
+  where u.type <> 'CS'
 )
 select
   *

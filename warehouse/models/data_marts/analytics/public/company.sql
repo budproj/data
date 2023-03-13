@@ -1,6 +1,6 @@
 with
   stg_okr__team as (
-    select * from {{ ref('stg_okr__team') }}
+    select * from {{ ref('stg_okr__team') }} where not (id :: text = any(ARRAY {{ var('sandbox_ids') }}))
   ),
 
   companies as (

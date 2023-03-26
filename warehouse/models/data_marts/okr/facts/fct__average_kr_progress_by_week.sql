@@ -28,6 +28,8 @@ team_active_cycle as (
     left join {{ ref('dim__cycle') }} c on tc.day >= c.date_start
     and tc.day <= c.date_end
     and c.company_id = tc.company_id
+  where
+    c.cadence = 'QUARTERLY'
 ),
 cycles_with_expected_progress_by_week as (
   select

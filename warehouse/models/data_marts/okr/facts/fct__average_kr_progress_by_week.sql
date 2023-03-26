@@ -53,8 +53,6 @@ krs_per_cycles_with_expected_progress_by_week as (
     cycles_with_expected_progress_by_week cwepgbw
     left join {{ ref('dim__key_result') }} kr on cwepgbw.cycle_id = kr.cycle_id
     left join {{ ref('dim__company') }} co on kr.company_id = co.id
-  where
-    co.name = 'Bud'
 ),
 check_in_by_week as (
   select

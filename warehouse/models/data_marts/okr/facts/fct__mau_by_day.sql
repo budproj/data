@@ -2,7 +2,7 @@ with calendar as (
   select
     distinct day
   from
-    dm_okr.fct__user_is_active_by_day ac
+    {{ ref('fct__user_is_active_by_day') }} ac
   order by
     day
 ),

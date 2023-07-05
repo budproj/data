@@ -1,0 +1,1 @@
+select u.* from {{ref('dim__user')}} u left join {{ref('fct__company_members')}} cm on u.id = cm.user_id join {{ref('dim__company')}} c on cm.company_id = c.id where c.team_id :: text = 'c428f5a7-6c55-496f-9edb-1e2a37aed73b'

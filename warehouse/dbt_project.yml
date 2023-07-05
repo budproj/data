@@ -3,6 +3,9 @@ version: 1.0.0
 config-version: 2
 profile: default
 
+model-paths: ["models"]
+seed-paths: ["seeds"]
+
 seeds:
   data:
     +schema: seeds
@@ -24,12 +27,17 @@ seeds:
 
 models:
   data:
+    +materialized: table
     data_marts:
-      +materialized: table
       okr:
-        +schema: dm_okr
+        dimensions:
+          +schema: dm_okr
+        facts:
+          +schema: dm_okr
         staging:
           +schema: staging
+        gupy-exception:
+          +schema: gupy_exception
 
 vars:
   sandbox_ids: ['ac06b512-0726-4c7c-b143-2a4a0a3c4467', 'dd63b8b4-8872-4fed-a33a-12a22a3fa6f2', '4866ebb1-39f2-4656-a556-a822ff85ea5c', '542a7c6b-b18d-4152-abae-f43ea445366f', '2db3f19e-3322-43d3-95f8-df12c7e8b9a7', 'a7f60032-72fc-41a8-bb41-ada0944fb512', 'fb0872cd-85ff-47dd-bdb5-2c8dddfdb916', 'bd4d7747-d70b-4f63-aa88-fd60d8008381']

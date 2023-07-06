@@ -9,7 +9,7 @@ with
 
   final as  (
     select
-      id || created_at :: text  as id,
+      id,
       id as team_id,
       name,
       created_at,

@@ -1,8 +1,8 @@
-with src_dim__llm as (
+with src_dim__llm_openai as (
     select
         *
     from
-        {{ source('conformed', 'llm__llm_subset_columns') }}
+        {{ source('conformed', 'llm__llm_openaigeneration_subset_columns') }}
 ),
 
 final as (
@@ -27,7 +27,7 @@ final as (
         requesterteamid as requester_team_id,
         requestercompanyid as requester_company_id
     from
-        src_dim__llm
+        src_dim__llm_openai
 )
 select
     *

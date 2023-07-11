@@ -15,6 +15,7 @@ sources:
       - name: okr__key_result_comment
       - name: okr__key_result_check_mark
       - name: okr__key_result_support_team_members_user
+      - name: okr__key_result_update
       - name: amplitude__events
       - name: analytics__company
       - name: analytics__key_result_progress_record

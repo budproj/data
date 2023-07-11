@@ -168,6 +168,8 @@ select
 from
     team_data
     left join routines_data_wau on team_data.team_id = routines_data_wau.team_id
+    and team_data.id = routines_data_wau.id
     and team_data.day = routines_data_wau.day
     left join routines_data_mau on team_data.team_id = routines_data_mau.team_id
+    and team_data.id = routines_data_mau.id
     and team_data.day = routines_data_mau.day

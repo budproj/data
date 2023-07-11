@@ -1,3 +1,4 @@
+-- Total tokens that exceed each model's context window token size limit
 with context_window as (
     select
         *

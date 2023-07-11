@@ -1,3 +1,4 @@
+-- IO operations durations for analytical purposes. At first, does not require any alarms
 with openai_stats as (
     select *,
            extract(epoch from (requested_at - created_at)) as db_write_duration,

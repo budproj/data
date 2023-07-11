@@ -19,5 +19,4 @@ where
 group by
     duration_in_seconds
 order by
-    duration_in_seconds;
-
+    duration_in_seconds

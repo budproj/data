@@ -10,4 +10,4 @@ where
 group by
     total_tokens_bucket
 order by
-    total_tokens_bucket;
+    total_tokens_bucket

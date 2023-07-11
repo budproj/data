@@ -16,7 +16,10 @@ with
       objective_id::uuid,
       initial_value::float,
       created_at::timestamp,
-      updated_at::timestamp
+      updated_at::timestamp,
+      mode::text,
+      comment_count::jsonb,
+      last_updated_by::jsonb
     from src_okr__key_result
   )
 

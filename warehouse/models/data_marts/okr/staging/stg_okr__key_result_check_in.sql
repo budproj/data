@@ -12,7 +12,8 @@ with
       parent_id::uuid,
       confidence::smallint,
       key_result_id::uuid,
-      created_at::timestamp
+      created_at::timestamp,
+      previous_state::jsonb
     from src_okr__key_result_check_in
   )
 

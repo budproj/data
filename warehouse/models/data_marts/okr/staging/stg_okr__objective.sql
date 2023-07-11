@@ -11,7 +11,9 @@ with
       cycle_id::uuid,
       owner_id::uuid,
       created_at::timestamp,
-      updated_at::timestamp
+      updated_at::timestamp,
+      description::text,
+      mode::text
     from src_okr__objective
   )
 

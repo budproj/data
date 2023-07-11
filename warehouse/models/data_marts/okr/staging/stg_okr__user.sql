@@ -6,7 +6,7 @@ with
   final as (
     select
       id::uuid,
-      role,
+      role::text,
       about::text,
       email::varchar(256),
       gender::varchar(32),

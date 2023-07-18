@@ -2,12 +2,12 @@ with src_dim__llm_openai as (
     select
         *
     from
-        {{ source('conformed', 'llm__llm_openaigeneration_subset_columns') }}
+        {{ source('conformed', 'llm__openaicompletion') }}
 ),
 
 final as (
     select
-        SPLIT_PART(id, '.', 3) :: text as id,
+        SPLIT_PART(id, '.', 3) :: uuid as id,
         input,
         model :: text,
         action :: text,
@@ -20,8 +20,8 @@ final as (
         referenceid as reference_id,
         requestedat :: timestamp as requested_at,
         respondedat :: timestamp as responded_at,
-        producedtokens as produced_tokens,
-        consumedtokens as consumed_tokens,
+        prompt_tokens,
+        completion_tokens,
         totaltokens as total_tokens,
         requesteruserid as requester_user_id,
         requesterteamid as requester_team_id,

@@ -8,24 +8,27 @@ with src_dim__llm_openai as (
 final as (
     select
         SPLIT_PART(id, '.', 3) :: uuid as id,
-        input,
+        input :: jsonb,
+        messages :: jsonb,
         model :: text,
         action :: text,
         entity :: text,
         output :: text,
         status :: text,
-        request,
-        response,
+        request :: jsonb,
+        response :: jsonb,
         createdat :: timestamp as created_at,
-        referenceid as reference_id,
+        referenceid :: uuid as reference_id,
         requestedat :: timestamp as requested_at,
         respondedat :: timestamp as responded_at,
-        prompt_tokens,
-        completion_tokens,
-        totaltokens as total_tokens,
-        requesteruserid as requester_user_id,
-        requesterteamid as requester_team_id,
-        requestercompanyid as requester_company_id
+        promptTokens :: number as prompt_tokens,
+        completionTokens :: number as completion_tokens,
+        estimatedCompletionTokens :: number as estimated_completion_tokens,
+        estimatedPromptTokens :: number as estimated_prompt_tokens,
+        totaltokens :: number as total_tokens,
+        requesteruserid :: uuid as requester_user_id,
+        requesterteamid :: uuid as requester_team_id,
+        requestercompanyid :: uuid as requester_company_id
     from
         src_dim__llm_openai
 )

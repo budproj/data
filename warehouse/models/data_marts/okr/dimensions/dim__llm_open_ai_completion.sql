@@ -10,4 +10,3 @@ with
   )
 
 select * from final
-

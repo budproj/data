@@ -13,7 +13,7 @@ with
 
   final as  (
     select
-      id :: text,
+      id,
       team_id,
       name,
       created_at :: timestamp as created_at,

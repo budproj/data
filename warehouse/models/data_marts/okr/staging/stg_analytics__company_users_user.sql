@@ -5,7 +5,7 @@ with
 
   final as (
     select
-      company_id::text,
+      company_id::uuid,
       user_id::uuid
     from src_analytics__company_users_user
   )

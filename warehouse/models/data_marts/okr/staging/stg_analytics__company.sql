@@ -5,7 +5,7 @@ with
 
   final as (
     select
-      id::text,
+      id::uuid,
       team_id::uuid,
       name::varchar(256),
       created_at::timestamp,

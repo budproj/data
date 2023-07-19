@@ -46,7 +46,7 @@ cohort as (
         ) :: int
 )
 select
-    null :: text as company_id,
+    null :: uuid as company_id,
     'Geral' as company_name,
     avg(
         case

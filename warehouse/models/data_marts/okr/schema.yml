@@ -23,7 +23,7 @@ sources:
       - name: routines__answer
       - name: routines__answergroup
       - name: comm__comment
-      - name: llm__llm_openaigeneration_subset_columns
+      - name: llm__openaicompletion
 
 models:
   - name: dim__user

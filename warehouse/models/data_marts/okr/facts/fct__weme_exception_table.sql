@@ -16,7 +16,8 @@ with time_responsavel as (
       else 'Sem check-in ainda'
     end as "Status de Progresso",
     krp.progress as "Progresso",
-    krci.created_at AS "Último check-in"
+    krci.created_at AS "Último check-in",
+    delta.weekly_delta_progress as "Progresso vs semana anterior"
   FROM
     {{ ref('dim__key_result') }} kr
     LEFT JOIN {{ ref('fct__key_result_progress')}} krp ON kr.id = krp.key_result_id
@@ -27,6 +28,7 @@ with time_responsavel as (
     LEFT JOIN {{ ref('dim__cycle')}} cy ON kr.cycle_id = cy.id
     LEFT JOIN {{ ref('fct__key_result_latest_check_in')}} krlci ON kr.id = krlci.key_result_id
     LEFT JOIN {{ ref('dim__key_result_check_in')}} krci ON krlci.key_result_check_in_id = krci.id
+    LEFT JOIN {{ ref('fct__key_result_last_progress_comparing_previous_week') }} delta ON kr.id = delta.key_result_id
   WHERE
     (
       cy.active = TRUE

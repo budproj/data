@@ -52,7 +52,13 @@ krs_per_cycles_with_expected_progress_by_week as (
   from
     cycles_with_expected_progress_by_week cwepgbw
     left join {{ ref('dim__key_result') }} kr on cwepgbw.cycle_id = kr.cycle_id
+    left join {{ ref('fct__key_result_latest_check_in') }} lci on kr.id = lci.key_result_id
+    left join {{ ref('dim__key_result_check_in') }} krci on lci.key_result_check_in_id = krci.id
     left join {{ ref('dim__company') }} co on kr.company_id = co.id
+  where
+    krci.confidence <> -100 or
+    krci.confidence is null or
+    (krci.confidence = -100 and cwepgbw.day < krci.created_at)
 ),
 check_in_by_week as (
   select

@@ -40,8 +40,8 @@ krs_by_day as (
         left join {{ ref('fct__key_result_latest_check_in') }} lci on kr.id = lci.key_result_id
         left join {{ ref('dim__key_result_check_in') }} lkrci on lci.key_result_check_in_id = lkrci.id
         left join {{ ref('dim__key_result_check_in') }} ci on kr.id = ci.key_result_id
-        and ci.created_at >= tac.day :: date - 8
-        and ci.created_at <= tac.day :: date + 1
+        and ci.created_at >= tac.day :: date - 7
+        and ci.created_at <= tac.day :: date - 1
     where
         tac.cadence = 'QUARTERLY'
         and (

@@ -23,7 +23,7 @@ final as (
   from
     calendar c
     join {{ ref('fct__user_is_active_by_day') }} ac on ac.day >= c.day - interval '7' day
-    and ac.day <= c.day
+    and ac.day <= c.day - interval '1' day
     join {{ ref('fct__company_members') }} fcm on ac.user_id = fcm.user_id
   group by
     c.day,

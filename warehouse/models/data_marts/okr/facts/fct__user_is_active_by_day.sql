@@ -1,6 +1,8 @@
 with
   amplitude_events as (
     select * from {{ ref('dim__amplitude_event') }}
+  where
+    event_time > current_date - interval '365' day
   ),
 
   users as (

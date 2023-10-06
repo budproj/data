@@ -3,6 +3,8 @@ with calendar as (
     distinct day
   from
     {{ ref('fct__user_is_active_by_day') }} ac
+  where
+    day > current_date - interval '365' day
   order by
     day
 ),

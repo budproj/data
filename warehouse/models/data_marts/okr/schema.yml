@@ -16,13 +16,29 @@ sources:
       - name: key_result_check_mark
       - name: key_result_support_team_members_user
       - name: key_result_update
+
+  - name: conformed
+    database: dw001
+    schema: conformed
       - name: amplitude__events
       - name: analytics__company
       - name: analytics__key_result_progress_record
       - name: analytics__company_users_user
+
+  - name: routines
+    database: dw001
+    schema: routines
       - name: answer
       - name: answergroup
+
+  - name: comments
+    database: dw001
+    schema: comments
       - name: comment
+
+  - name: llm
+    database: dw001
+    schema: llm
       - name: openaicompletion
 
 models:

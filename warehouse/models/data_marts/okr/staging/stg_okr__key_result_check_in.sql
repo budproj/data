@@ -1,6 +1,6 @@
 with
   src_okr__key_result_check_in as (
-    select * from {{ source('conformed', 'okr__key_result_check_in') }}
+    select * from {{ source('postgres_business', 'key_result_check_in') }}
   ),
 
   final as (

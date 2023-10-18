@@ -1,6 +1,6 @@
 with
   src_okr__key_result as (
-    select * from {{ source('conformed', 'okr__key_result') }}
+    select * from {{ source('postgres_business', 'key_result') }}
   ),
 
   final as (

@@ -78,7 +78,7 @@ user_owner_okr as (
     count(distinct kr.id) as count_okrs
   from
     users_with_type u
-    join conformed.okr__key_Result kr on u.id :: text = kr.owner_id
+    join postgres_business.key_result kr on u.id :: text = kr.owner_id
   group by
     u.id
 ),
@@ -88,7 +88,7 @@ user_supports_okr as (
     count(distinct stm.key_result_id) as count_okrs
   from
     users_with_type u
-    join conformed.okr__key_result_support_team_members_user stm on u.id :: text = stm.user_id
+    join postgres_business.key_result_support_team_members_user stm on u.id :: text = stm.user_id
   group by
     u.id
 ),

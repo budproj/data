@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: conformed
+  - name: postgres_business
     database: dw001
-    schema: conformed
+    schema: postgres_business
     tables:
       - name: okr__user
       - name: okr__team

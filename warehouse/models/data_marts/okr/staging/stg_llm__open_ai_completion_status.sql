@@ -2,7 +2,7 @@ with src_dim__llm_openai as (
     select
         *
     from
-        {{ source('conformed', 'llm__openaicompletion') }}
+        {{ source('llm', 'openaicompletion') }}
 ),
 
 final as (

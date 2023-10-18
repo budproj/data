@@ -1,6 +1,6 @@
 with
   src__comments as (
-    select * from {{ source('conformed', 'comm__comment') }}
+    select * from {{ source('comments', 'comment') }}
   ),
 
   final as (

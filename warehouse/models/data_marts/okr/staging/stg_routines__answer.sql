@@ -1,6 +1,6 @@
 with
   src_routines__answer as (
-    select * from {{ source('conformed', 'routines__answer') }}
+    select * from {{ source('routines', 'answer') }}
   ),
 
   final as (

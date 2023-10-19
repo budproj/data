@@ -7,8 +7,8 @@ with
     select
       id,
       value,
-      questionid  as question_id,
-      answergroupid as answer_group_id
+      "questionId" as question_id,
+      "answerGroupId" as answer_group_id
     from stg_routines__answer
   )
 

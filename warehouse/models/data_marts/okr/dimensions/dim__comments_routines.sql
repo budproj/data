@@ -7,9 +7,9 @@ with
     select
         id,
         split_part(split_part(entity, 'routine:', 2), ':', 1) as first_entity,
-        userid as user_id,
+        "userId" as user_id,
         content,
-        createdat as created_at
+        "createdAt" as created_at
     from stg_comm__comments
   )
 

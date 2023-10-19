@@ -12,7 +12,7 @@ with
       created_at::timestamp,
       updated_at::timestamp,
       type::text,
-      extra::json,
+      -- extra::json,
       parent_id::uuid
     from src_okr__key_result_comment
   )

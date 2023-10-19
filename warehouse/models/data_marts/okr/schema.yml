@@ -19,7 +19,8 @@ sources:
 
   - name: conformed
     database: dw001
-    schema: conformed
+    schema: postgres_business
+    tables:
       - name: amplitude__events
       - name: analytics__company
       - name: analytics__key_result_progress_record
@@ -28,18 +29,21 @@ sources:
   - name: routines
     database: dw001
     schema: routines
+    tables:
       - name: answer
       - name: answergroup
 
   - name: comments
     database: dw001
     schema: comments
+    tables:
       - name: comment
 
   - name: llm
     database: dw001
     schema: llm
-      - name: openaicompletion
+    tables:
+      - name: OpenAiCompletion
 
 models:
   - name: dim__user

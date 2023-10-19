@@ -1,15 +1,15 @@
 with
   src__comments as (
-    select * from {{ source('comments', 'comment') }}
+    select * from {{ source('comments', 'Comment') }}
   ),
 
   final as (
     select 
       id :: uuid,
       entity :: text,
-      userid :: uuid,
+      "userId" :: uuid,
       content :: text,
-      createdat :: timestamp
+      "createdAt" :: timestamp
     from src__comments
   )
 

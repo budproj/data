@@ -19,7 +19,7 @@ sources:
 
   - name: conformed
     database: dw001
-    schema: postgres_business
+    schema: conformed
     tables:
       - name: amplitude__events
       - name: analytics__company
@@ -30,14 +30,14 @@ sources:
     database: dw001
     schema: routines
     tables:
-      - name: answer
-      - name: answergroup
+      - name: Answer
+      - name: AnswerGroup
 
   - name: comments
     database: dw001
     schema: comments
     tables:
-      - name: comment
+      - name: Comment
 
   - name: llm
     database: dw001

@@ -1,13 +1,13 @@
 with
   src_routines__answer_group as (
-    select * from {{ source('routines', 'answergroup') }}
+    select * from {{ source('routines', 'AnswerGroup') }}
   ),
 
   final as (
     select
       id :: uuid,
-      userid ::uuid,
-      companyid::uuid,
+      "userId" ::uuid,
+      "companyId"::uuid,
       timestamp::timestamp
     from src_routines__answer_group
   )

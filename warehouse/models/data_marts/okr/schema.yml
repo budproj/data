@@ -1,29 +1,49 @@
 version: 2
 
 sources:
+  - name: postgres_business
+    database: dw001
+    schema: postgres_business
+    tables:
+      - name: user
+      - name: team
+      - name: team_users_user
+      - name: cycle
+      - name: objective
+      - name: key_result
+      - name: key_result_check_in
+      - name: key_result_comment
+      - name: key_result_check_mark
+      - name: key_result_support_team_members_user
+      - name: key_result_update
+
   - name: conformed
     database: dw001
     schema: conformed
     tables:
-      - name: okr__user
-      - name: okr__team
-      - name: okr__team_users_user
-      - name: okr__cycle
-      - name: okr__objective
-      - name: okr__key_result
-      - name: okr__key_result_check_in
-      - name: okr__key_result_comment
-      - name: okr__key_result_check_mark
-      - name: okr__key_result_support_team_members_user
-      - name: okr__key_result_update
       - name: amplitude__events
       - name: analytics__company
       - name: analytics__key_result_progress_record
       - name: analytics__company_users_user
-      - name: routines__answer
-      - name: routines__answergroup
-      - name: comm__comment
-      - name: llm__openaicompletion
+
+  - name: routines
+    database: dw001
+    schema: routines
+    tables:
+      - name: Answer
+      - name: AnswerGroup
+
+  - name: comments
+    database: dw001
+    schema: comments
+    tables:
+      - name: Comment
+
+  - name: llm
+    database: dw001
+    schema: llm
+    tables:
+      - name: OpenAiCompletion
 
 models:
   - name: dim__user

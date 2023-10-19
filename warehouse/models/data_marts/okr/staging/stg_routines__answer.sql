@@ -1,14 +1,14 @@
 with
   src_routines__answer as (
-    select * from {{ source('conformed', 'routines__answer') }}
+    select * from {{ source('routines', 'Answer') }}
   ),
 
   final as (
     select
       id :: uuid,
       value :: varchar(256),
-      questionid::uuid,
-      answergroupid::uuid
+      "questionId"::uuid,
+      "answerGroupId"::uuid
     from src_routines__answer where value is not null
   )
 

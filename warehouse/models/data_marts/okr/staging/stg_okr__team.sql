@@ -1,6 +1,6 @@
 with
   src_okr__team as (
-    select * from {{ source('conformed', 'okr__team') }}
+    select * from {{ source('postgres_business', 'team') }}
   ),
 
   final as (

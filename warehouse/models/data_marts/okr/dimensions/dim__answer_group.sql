@@ -6,8 +6,8 @@ with
   final as (
     select
       id,
-      userid as user_id,
-      companyid  as company_id,
+      "userId" as user_id,
+      "companyId"  as company_id,
       timestamp
     from stg_routines__answer_group
   )

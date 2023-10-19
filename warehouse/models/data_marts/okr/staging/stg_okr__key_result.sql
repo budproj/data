@@ -1,6 +1,6 @@
 with
   src_okr__key_result as (
-    select * from {{ source('conformed', 'okr__key_result') }}
+    select * from {{ source('postgres_business', 'key_result') }}
   ),
 
   final as (
@@ -17,9 +17,9 @@ with
       initial_value::float,
       created_at::timestamp,
       updated_at::timestamp,
-      mode::text,
-      comment_count::jsonb,
-      last_updated_by::jsonb
+      mode::text
+    --   comment_count::jsonb,
+    --   last_updated_by::jsonb
     from src_okr__key_result
   )
 

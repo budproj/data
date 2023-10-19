@@ -1,6 +1,6 @@
 with
   src_okr__cycle as (
-    select * from {{ source('conformed', 'okr__cycle') }}
+    select * from {{ source('postgres_business', 'cycle') }}
   ),
 
   final as (

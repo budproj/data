@@ -1,6 +1,6 @@
 with
   src_okr__objective as (
-    select * from {{ source('conformed', 'okr__objective') }}
+    select * from {{ source('postgres_business', 'objective') }}
   ),
 
   final as (

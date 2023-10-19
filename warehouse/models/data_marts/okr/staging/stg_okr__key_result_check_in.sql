@@ -1,6 +1,6 @@
 with
   src_okr__key_result_check_in as (
-    select * from {{ source('conformed', 'okr__key_result_check_in') }}
+    select * from {{ source('postgres_business', 'key_result_check_in') }}
   ),
 
   final as (
@@ -12,8 +12,9 @@ with
       parent_id::uuid,
       confidence::smallint,
       key_result_id::uuid,
-      created_at::timestamp,
-      previous_state::jsonb
+      created_at::timestamp
+      -- ,
+      -- previous_state::jsonb
     from src_okr__key_result_check_in
   )
 

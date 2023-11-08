@@ -13,7 +13,7 @@ with
       key_result.id as key_result_id,
       key_result_check_in.id as key_result_check_in_id,
       key_result_check_in.created_at as date,
-      {{ calculate_progress('key_result_check_in', 'key_result', 'mode') }} as progress,
+      {{ calculate_progress('key_result_check_in', 'key_result') }} as progress,
       key_result_check_in.created_at,
       key_result_check_in.created_at as updated_at
     from key_result_check_in

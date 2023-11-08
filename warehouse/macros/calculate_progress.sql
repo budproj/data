@@ -1,10 +1,10 @@
-{% macro calculate_progress(check_in_alias, kr_alias, mode) -%}
+{% macro calculate_progress(check_in_alias, kr_alias) -%}
   case 
     when  
-      mode = 'ASCENDING' and check_in_alias >= kr_alias 
+      {{ kr_alias }}.mode = 'ASCENDING' and {{ check_in_alias }}.value >= {{ kr_alias }}.goal
     then 100
     when 
-      mode = 'DESCENDING' and check_in_alias <= kr_alias 
+      {{ kr_alias }}.mode = 'DESCENDING' and {{ check_in_alias }}.value <= {{ kr_alias }}.goal
     then 100
     else
       greatest(

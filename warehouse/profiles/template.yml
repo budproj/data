@@ -7,7 +7,7 @@ default:
       user: airbyte
       password: changeme
       port: 5432
-      dbname: dw001
+      dbname: dw002
       schema: dm_okr
 
     prod:

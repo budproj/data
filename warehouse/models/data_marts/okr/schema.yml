@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: postgres_business
-    database: dw001
+    database: dw002
     schema: postgres_business
     tables:
       - name: user
@@ -18,7 +18,7 @@ sources:
       - name: key_result_update
 
   - name: conformed
-    database: dw001
+    database: dw002
     schema: conformed
     tables:
       - name: amplitude__events
@@ -27,20 +27,20 @@ sources:
       - name: analytics__company_users_user
 
   - name: routines
-    database: dw001
+    database: dw002
     schema: routines
     tables:
       - name: Answer
       - name: AnswerGroup
 
   - name: comments
-    database: dw001
+    database: dw002
     schema: comments
     tables:
       - name: Comment
 
   - name: llm
-    database: dw001
+    database: dw002
     schema: llm
     tables:
       - name: OpenAiCompletion

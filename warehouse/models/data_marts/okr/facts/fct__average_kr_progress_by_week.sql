@@ -1,6 +1,6 @@
 with calendar as (
   select
-    distinct day
+    distinct date_trunc('week', day) as week
   from
     {{ ref('fct__user_is_active_by_day') }}
   where
@@ -8,59 +8,36 @@ with calendar as (
   order by
     day
 ),
-team_calendar as (
+krs_per_cycles_with_expected_progress_by_week as (
   select
-    day,
+    c.week,
     t.id as team_id,
-    t.company_id
-  from
-    calendar c
-    join {{ ref('dim__team') }} t on c.day >= t.created_at
-),
-team_active_cycle as (
-  select
-    tc.day,
-    tc.team_id,
-    c.cadence,
-    c.id as cycle_id,
-    c.date_start,
-    c.date_end
-  from
-    team_calendar tc
-    left join {{ ref('dim__cycle') }} c on tc.day >= c.date_start
-    and tc.day <= c.date_end
-    and c.company_id = tc.company_id
-),
-cycles_with_expected_progress_by_week as (
-  select
-    *,
+    cy.id as cycle_id,
     (
       (
-        date_trunc('week', day) :: date - date_trunc('week', date_start) :: date
+        c.week :: date - date_trunc('week', cy.date_start) :: date
       ) / 7
     ) :: float * 70 / 100 / (
       (
-        date_trunc('week', date_end) :: date - date_trunc('week', date_start) :: date
+        date_trunc('week', cy.date_end) :: date - date_trunc('week', cy.date_start) :: date
       ) / 7
-    ) as expected_progress
-  from
-    team_active_cycle
-),
-krs_per_cycles_with_expected_progress_by_week as (
-  select
-    cwepgbw.*,
+    ) as expected_progress,
     kr.id as key_result_id,
     kr.type
   from
-    cycles_with_expected_progress_by_week cwepgbw
-    left join {{ ref('dim__key_result') }} kr on cwepgbw.cycle_id = kr.cycle_id
+    calendar c
+    join {{ ref('dim__team') }} t on c.week >= t.created_at
+    left join {{ ref('dim__cycle') }} cy on c.week >= cy.date_start
+    and c.week <= cy.date_end
+    and cy.company_id = t.company_id
+    left join {{ ref('dim__key_result') }} kr on cy.id = kr.cycle_id
     left join {{ ref('fct__key_result_latest_check_in') }} lci on kr.id = lci.key_result_id
     left join {{ ref('dim__key_result_check_in') }} krci on lci.key_result_check_in_id = krci.id
-    left join {{ ref('dim__company') }} co on kr.company_id = co.id
   where
-    krci.confidence <> -100 or
+    cy.cadence = 'QUARTERLY' and
+    (krci.confidence <> -100 or
     krci.confidence is null or
-    (krci.confidence = -100 and cwepgbw.day < krci.created_at)
+    (krci.confidence = -100 and c.week < krci.created_at))
 ),
 check_in_by_week as (
   select
@@ -68,32 +45,16 @@ check_in_by_week as (
     krs_per_cycles_with_expected_progress_by_week.team_id,
     krs_per_cycles_with_expected_progress_by_week.expected_progress,
     krs_per_cycles_with_expected_progress_by_week.cycle_id,
-    date_trunc(
-      'week',
-      krs_per_cycles_with_expected_progress_by_week.day
-    ) as week,
-    case
-      when krs_per_cycles_with_expected_progress_by_week.type = 'ASCENDING' then max(krci.value)
-      when krs_per_cycles_with_expected_progress_by_week.type = 'DESCENDING' then min(krci.value)
-      else null
-    end as check_in_value
+    krs_per_cycles_with_expected_progress_by_week.week,
+    LAST_VALUE (krci.value)  
+        OVER ( 
+            PARTITION BY krs_per_cycles_with_expected_progress_by_week.key_result_id, krs_per_cycles_with_expected_progress_by_week.week
+            ORDER BY krci.created_at
+    ) as check_in_value
   from
     krs_per_cycles_with_expected_progress_by_week
     left join {{ ref('dim__key_result_check_in') }} krci on krs_per_cycles_with_expected_progress_by_week.key_result_id = krci.key_result_id
-    and date_trunc(
-      'day',
-      krs_per_cycles_with_expected_progress_by_week.day
-    ) = date_trunc('day', krci.created_at)
-  group by
-    krs_per_cycles_with_expected_progress_by_week.key_result_id,
-    krs_per_cycles_with_expected_progress_by_week.type,
-    date_trunc(
-      'week',
-      krs_per_cycles_with_expected_progress_by_week.day
-    ),
-    krs_per_cycles_with_expected_progress_by_week.team_id,
-    krs_per_cycles_with_expected_progress_by_week.cycle_id,
-    krs_per_cycles_with_expected_progress_by_week.expected_progress
+    and krs_per_cycles_with_expected_progress_by_week.week = date_trunc('week', krci.created_at)
 ),
 temp_helper as (
   select
@@ -109,21 +70,13 @@ temp_helper as (
         else 1
       end
     ) over (
+      partition by
+        key_result_id
       order by
-        key_result_id,
-        team_id,
-        expected_progress,
-        cycle_id,
         week
     ) as value_partition
   from
     check_in_by_week
-  order by
-    key_result_id,
-    team_id,
-    expected_progress,
-    cycle_id,
-    week
 ),
 check_in_by_week_copy_last_non_null_value as (
   select
@@ -133,14 +86,8 @@ check_in_by_week_copy_last_non_null_value as (
     cycle_id,
     week,
     first_value(check_in_value) over (
-      partition by key_result_id,
-      team_id,
-      cycle_id,
-      value_partition
+      partition by key_result_id
       order by
-        key_result_id,
-        team_id,
-        cycle_id,
         week
     ) as check_in_value
   from

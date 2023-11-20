@@ -8,33 +8,37 @@ with calendar as (
   order by
     day
 ),
-final as (
+temp_table as (
   select
     c.day,
-    ac.user_type,
-    ac.flag_owns_team,
-    fcm.company_id,
-    count(distinct(ac.user_id)) as unique_users,
-    count(
-      distinct(
-        case
-          when ac.fill_routine is true then ac.user_id
-        end
-      )
-    ) as unique_active_users
+    ac.user_id,
+    row_number() over (partition by c.day, ac.user_id) as rn,
+    max(
+      case
+        when fill_routine then 1
+        else 0
+      end
+    ) over (partition by c.day, ac.user_id) as active
   from
     calendar c
-    join {{ ref('fct__user_is_active_by_day') }} ac on ac.day >= c.day - interval '7' day
-    and ac.day <= c.day
-    join {{ ref('fct__company_members') }} fcm on ac.user_id = fcm.user_id
-  group by
-    c.day,
-    ac.user_type,
-    ac.flag_owns_team,
-    fcm.company_id
+    left join {{ ref('fct__user_is_active_by_day') }} ac on ac.day >= c.day - interval '7' day
+    and ac.day <= c.day - interval '1' day
 )
 select
-  *,
-  unique_active_users :: float / unique_users as wau
+  tt.day,
+  u.user_type,
+  u.flag_owns_team,
+  fcm.company_id,
+  count(1) as unique_users,
+  sum(tt.active) as unique_active_users
 from
-  final
+  temp_table tt
+  left join dm_okr.dim__user u on tt.user_id = u.id
+  join {{ ref('fct__company_members') }} fcm on tt.user_id = fcm.user_id
+where
+  rn = 1
+group by
+  tt.day,
+  u.user_type,
+  u.flag_owns_team,
+  fcm.company_id

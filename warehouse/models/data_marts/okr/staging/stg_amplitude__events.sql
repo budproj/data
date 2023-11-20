@@ -39,13 +39,7 @@ with
       device_family::varchar(32),
       start_version::varchar(32),
       device_carrier::varchar(32),
-      TO_TIMESTAMP(
-        processed_time,
-        case 
-           WHEN processed_time LIKE '____-__-__ __:__:__%' THEN 'YYYY:MM:DD HH24:MI:SS'
-           WHEN processed_time LIKE '____-__-__T__:__:__%' THEN 'YYYY:MM:DDTHH24:MI:SS'
-        END        
-      ) :: timestamp as processed_time,
+      processed_time :: timestamp as processed_time,
       user_properties::json,
       event_properties::json,
       group_properties::json,

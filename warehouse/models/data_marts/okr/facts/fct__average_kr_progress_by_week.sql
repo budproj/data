@@ -6,7 +6,7 @@ with calendar as (
   where
     day > current_date - interval '365' day
   order by
-    day
+    date_trunc('week', day)
 ),
 krs_per_cycles_with_expected_progress_by_week as (
   select

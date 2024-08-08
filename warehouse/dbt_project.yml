@@ -31,5 +31,19 @@ models:
         staging:
           +schema: staging
 
+tests:
+  data:
+    tests_high_prior:
+      severity: error
+      error_if: "!=0"
+    tests_medium_prior:
+      severity: error
+      error_if: ">10000"
+      warn_if: ">100"
+    tests_low_prior:
+      severity: warn
+      error_if: ">100"
+      warn_if: "!=0"
+
 vars:
   sandbox_ids: ['ac06b512-0726-4c7c-b143-2a4a0a3c4467', 'dd63b8b4-8872-4fed-a33a-12a22a3fa6f2', '4866ebb1-39f2-4656-a556-a822ff85ea5c', '542a7c6b-b18d-4152-abae-f43ea445366f', '2db3f19e-3322-43d3-95f8-df12c7e8b9a7', 'a7f60032-72fc-41a8-bb41-ada0944fb512', 'fb0872cd-85ff-47dd-bdb5-2c8dddfdb916', 'bd4d7747-d70b-4f63-aa88-fd60d8008381']

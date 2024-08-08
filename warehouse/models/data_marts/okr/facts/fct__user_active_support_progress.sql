@@ -26,7 +26,7 @@ with
       key_result_progress.date
       from users
       left join key_result_support_team_members_user on users.id = key_result_support_team_members_user.user_id
-      left join key_result on key_result_support_team_members_user.key_result_id = key_result.id
+      left join key_result on key_result_support_team_members_user.key_result_id = key_result.id or users.id = key_result.owner_id
       left join key_result_progress on key_result.id = key_result_progress.key_result_id
       left join cycle on key_result.cycle_id = cycle.id
       where cycle.active = true

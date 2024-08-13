@@ -20,7 +20,7 @@ with
   ),
 
   user_progress_in_active_key_result as (
-    select
+    select distinct
       users.id as user_id,
       key_result_progress.progress,
       key_result_progress.date
